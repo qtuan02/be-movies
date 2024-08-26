@@ -12,7 +12,8 @@ class Movie
   field :duration, type: Integer
   field :director, type: String
   field :actors, type: String
-  field :country_id, type: String
-  field :genre_ids, type: Array, default: []
+
+  belongs_to :country
+  has_and_belongs_to_many :genres
 
 end

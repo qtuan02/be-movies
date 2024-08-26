@@ -3,5 +3,6 @@ class Country
   include Mongoid::Timestamps
 
   field :name, type: String
+  has_many :movies
 
 end
