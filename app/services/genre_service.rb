@@ -1,14 +1,16 @@
 class GenreService < ApplicationService
-  def index(page = nil, limit = nil, search = nil)
+  def index(page = nil, limit = nil, name = nil)
     begin
-      query = search ? { name: /#{search}/i } : {}
+      conditions = {}
+      conditions[:name] = /#{name}/i if name
       
       if page && limit
-        offset = page == 1 ? 0 : (limit.to_i * page.to_i) - (limit.to_i)
-        genres = Genre.where(query).offset(offset).limit(limit)
+        offset = (page.to_i - 1) * limit.to_i
+        genres = Genre.where(conditions).skip(offset).limit(limit.to_i)
       else
-        genres = Genre.where(query)
+        genres = Genre.where(conditions)
       end
+
       genres
     rescue
       raise StandardError
@@ -41,6 +43,8 @@ class GenreService < ApplicationService
       else
         nil
       end
+    rescue CustomError => e
+      raise e
     rescue
       raise StandardError
     end

@@ -3,7 +3,7 @@ class Api::V1::CountryController < ApplicationController
   before_action :body_check, only: %i[ create update ]
 
   def index
-    countries = @country_service.index(params[:page], params[:limit], params[:search])
+    countries = @country_service.index(params[:page], params[:limit], params[:name])
     json_response Message.get(:get_all_success), true, countries.as_json(except: [:created_at, :updated_at]), :ok
   end
 

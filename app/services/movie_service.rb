@@ -1,8 +1,21 @@
 class MovieService < ApplicationService
 
-  def index
+  def index(page = nil, limit = nil, name = nil, status = nil, country_id = nil, genre_id = nil)
     begin
-      movies = Movie.includes(:country, :genres).all
+      conditions = {}
+
+      conditions[:name] = /#{name}/i if name
+      conditions[:status] = status if status
+      conditions[:country_id] = country_id if country_id
+      conditions[:genre_ids] = genre_id if genre_id
+
+      if page && limit
+        offset = (page.to_i - 1) * limit.to_i
+        movies = Movie.includes(:country, :genres).where(conditions).skip(offset).limit(limit.to_i)
+      else
+        movies = Movie.includes(:country, :genres).where(conditions)
+      end
+      
       movies
     rescue
       raise StandardError
@@ -33,8 +46,8 @@ class MovieService < ApplicationService
     begin
       movie = Movie.find(movie_id)
       if movie
-        data[:country] = Country.find(data[:country_id])
-        data[:genres] = data[:genre_ids].map { |genre| Genre.find(genre) }
+        data[:country] = Country.find(data[:country_id]) if data[:country_id]
+        data[:genres] = data[:genre_ids].map { |genre| Genre.find(genre) } if data[:genre_ids]
         movie.update(data)
         movie
       else

@@ -13,7 +13,7 @@ class Rack::Attack
     # puts "IP Address: #{req.ip}"
 
     [429, { 'Content-Type' => 'application/json' }, [{ 
-        message: 'Quá nhiều yêu cầu!',
+        message: 'Too many request!',
         is_success: false,
         data: nil
     }.to_json]]

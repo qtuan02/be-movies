@@ -3,7 +3,7 @@ class Api::V1::GenreController < ApplicationController
   before_action :body_check, only: %i[ create ]
 
   def index
-    genres = @genre_service.index(params[:page], params[:limit], params[:search])
+    genres = @genre_service.index(params[:page], params[:limit], params[:name])
     json_response Message.get(:get_all_success), true, genres.as_json(except: [:created_at, :updated_at]), :ok
   end
 
