@@ -28,7 +28,7 @@ class Api::V1::GenreController < ApplicationController
   def destroy
     is_destroy = @genre_service.destroy(params[:id])
     if is_destroy
-      json_response Message.get(:destroy_success), true, params[:id], :ok
+      json_response Message.get(:destroy_success), true, is_destroy, :ok
     else
       json_response Message.get(:not_found), false, nil, :not_found
     end

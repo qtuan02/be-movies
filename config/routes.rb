@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :country, only: [ :index, :show, :create, :destroy, :update ]
       resources :genre, only: [ :index, :show, :create, :destroy, :update ]
       resources :movie, only: [ :index, :show, :create, :update ]
+      resources :cinema, only: [ :index, :show, :create, :destroy, :update ]
     end
 
     namespace :v3 do

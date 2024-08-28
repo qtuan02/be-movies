@@ -1,0 +1,3 @@
+class ShowtimeService < ApplicationService
+  
+end

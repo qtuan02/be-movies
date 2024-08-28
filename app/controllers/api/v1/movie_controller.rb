@@ -3,7 +3,7 @@ class Api::V1::MovieController < ApplicationController
   before_action :body_check, only: %i[ create ]
 
   def index
-    movies = @movie_service.index(params[:page], params[:limit], params[:name], params[:status], params[:country_id], params[:genre_id]).map do |movie|
+    movies = @movie_service.index(params[:page], params[:limit], params[:name], params[:country_id], params[:genre_id]).map do |movie|
       movie.as_json(
         except: [:created_at, :updated_at, :country_id, :genre_ids],
         include: {
@@ -54,7 +54,7 @@ class Api::V1::MovieController < ApplicationController
     end
 
     def body_movie
-      params.permit(:poster, :trailer, :name, :slug, :age_limit, :description, :release, :duration, :status, :director, :actors, :country_id, genre_ids: [])
+      params.permit(:poster, :trailer, :name, :slug, :age_limit, :description, :release, :duration, :director, :actors, :country_id, genre_ids: [])
     end
 
     def body_check

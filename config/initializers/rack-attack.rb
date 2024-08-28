@@ -5,7 +5,7 @@ class Rack::Attack
     '127.0.0.1' == req.ip || '::1' == req.ip
   end
 
-  throttle('req/ip', limit: 5, period: 10) do |req|
+  throttle('req/ip', limit: 5, period: 10) do |req| # 1 IP Address - 5 requests in 10 seconds
     req.ip
   end
 

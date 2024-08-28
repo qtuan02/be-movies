@@ -1,11 +1,10 @@
 class MovieService < ApplicationService
 
-  def index(page = nil, limit = nil, name = nil, status = nil, country_id = nil, genre_id = nil)
+  def index(page = nil, limit = nil, name = nil, country_id = nil, genre_id = nil)
     begin
       conditions = {}
 
       conditions[:name] = /#{name}/i if name
-      conditions[:status] = status if status
       conditions[:country_id] = country_id if country_id
       conditions[:genre_ids] = genre_id if genre_id
 

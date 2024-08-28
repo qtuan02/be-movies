@@ -12,9 +12,9 @@ class Movie
   field :duration, type: Integer
   field :director, type: String
   field :actors, type: String
-  field :status, type: Boolean, default: false
 
   belongs_to :country
   has_and_belongs_to_many :genres
+  has_many :showtimes
 
 end
