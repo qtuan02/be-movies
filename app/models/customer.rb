@@ -12,4 +12,6 @@ class Customer
   field :point, type: Integer, default: 0
   field :status, type: Boolean, default: true
 
+  has_many :bookings
+
 end

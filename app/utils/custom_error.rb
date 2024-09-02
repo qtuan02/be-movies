@@ -5,4 +5,5 @@ class CustomError < StandardError
     @message = message
     @status = status
   end
+  
 end

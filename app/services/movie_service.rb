@@ -10,9 +10,9 @@ class MovieService < ApplicationService
 
       if page && limit
         offset = (page.to_i - 1) * limit.to_i
-        movies = Movie.includes(:country, :genres).where(conditions).skip(offset).limit(limit.to_i)
+        movies = Movie.where(conditions).skip(offset).limit(limit.to_i)
       else
-        movies = Movie.includes(:country, :genres).where(conditions)
+        movies = Movie.where(conditions)
       end
       
       movies
@@ -23,7 +23,7 @@ class MovieService < ApplicationService
 
   def show(movie_id)
     begin
-      movie = Movie.includes(:country, :genres).find(movie_id)
+      movie = Movie.find(movie_id)
       movie
     rescue
       raise StandardError

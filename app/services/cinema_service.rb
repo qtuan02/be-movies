@@ -43,6 +43,8 @@ class CinemaService < ApplicationService
       else
         nil
       end
+    rescue CustomError => e
+      raise e
     rescue
       raise StandardError
     end

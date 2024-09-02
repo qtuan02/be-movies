@@ -13,6 +13,6 @@ module Message
   }
 
   def self.get(key)
-    MESSAGES[key] || "Không tìm thấy thông báo!"
+    MESSAGES[key] || "No notification found!"
   end
 end

@@ -9,5 +9,10 @@ class Showtime
 
   belongs_to :movie
   belongs_to :cinema
+  has_many :bookings
+
+  def movie_name
+    movie.name
+  end
 
 end

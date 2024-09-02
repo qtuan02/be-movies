@@ -11,5 +11,6 @@ class User
   field :password, type: String
   field :role, type: String, default: 'USER'
   field :status, type: Boolean, default: false
+  
 
 end

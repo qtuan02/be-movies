@@ -19,18 +19,11 @@ module Jwt
   end
 
   def decoded_jwt(token)
-    # token = request.headers['Authorization']&.split(' ')&.last
-    # unless token
-    #   raise CustomError.new('Không có quyền truy cập!', :unauthorized)
-    # end
-
     begin
       decode = JWT.decode(token, SECRET, true, algorithm: 'HS256')
-      return decode
-    rescue JWT::ExpiredSignature
-      raise CustomError.new('Tài khoản đã hết hạn!', :unauthorized)
+      decode[0] # payload
     rescue
-      raise CustomError.new('Không có quyền truy cập!', :unauthorized)
+      raise StandardError
     end
   end
 
