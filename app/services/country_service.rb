@@ -1,17 +1,18 @@
 class CountryService < ApplicationService
-  def index(page = nil, limit = nil, name = nil)
+  def index(page, limit, name)
     begin
       conditions = {}
       conditions[:name] = /#{name}/i if name
-      
-      if page && limit
-        offset = (page.to_i - 1) * limit.to_i
-        countries = Country.where(conditions).skip(offset).limit(limit.to_i)
-      else
-        countries = Country.where(conditions)
-      end
 
-      countries
+      page = page ? page.to_i : 1
+      limit = limit ? limit.to_i : 5
+
+      offset = (page - 1) * limit
+      countries = Country.where(conditions).order(created_at: :desc).skip(offset).limit(limit)
+
+      total_pages = (Country.where(conditions).count.to_f / limit).ceil
+
+      { total_pages: total_pages , countries: countries }
     rescue
       raise StandardError
     end
