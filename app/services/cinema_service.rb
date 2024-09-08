@@ -1,17 +1,18 @@
 class CinemaService < ApplicationService
-  def index(page = nil, limit = nil, name = nil)
+  def index(page, limit, name)
     begin
       conditions = {}
       conditions[:name] = /#{name}/i if  name
-      
-      if page && limit
-        offset = (page.to_i - 1) * limit.to_i
-        cinemas = Cinema.where(conditions).skip(offset).limit(limit)
-      else
-        cinemas = Cinema.where(conditions)
-      end
 
-      cinemas
+      page = page ? page.to_i : 1
+      limit = limit ? limit.to_i : 5
+      
+      offset = (page - 1) * limit
+      cinemas = Cinema.where(conditions).order(created_at: :desc).skip(offset).limit(limit)
+
+      total_pages = (Cinema.where(conditions).count.to_f / limit).ceil
+
+      { total_pages: total_pages, cinemas: cinemas }
     rescue
       raise StandardError
     end

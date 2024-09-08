@@ -12,7 +12,7 @@ class CountryService < ApplicationService
 
       total_pages = (Country.where(conditions).count.to_f / limit).ceil
 
-      { total_pages: total_pages , countries: countries }
+      { total_pages: total_pages, countries: countries }
     rescue
       raise StandardError
     end
