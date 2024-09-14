@@ -3,7 +3,8 @@ class Api::V1::MovieController < ApplicationController
   before_action :body_check, only: %i[ create ]
 
   def index
-    movies = @movie_service.index(params[:page], params[:limit], params[:name], params[:country_id], params[:genre_id]).map do |movie|
+    response = @movie_service.index(params[:page], params[:limit], params[:name], params[:country_id], params[:genre_id])
+    movies = response[:movies].map do |movie|
       movie.as_json(
         except: [:created_at, :updated_at, :country_id, :genre_ids],
         include: {
@@ -12,7 +13,7 @@ class Api::V1::MovieController < ApplicationController
       })
     end
 
-    json_response Message.get(:get_all_success), true, movies, :ok
+    json_response response[:total_pages], true, movies, :ok
   end
 
   def show

@@ -1,21 +1,21 @@
 class MovieService < ApplicationService
 
-  def index(page = nil, limit = nil, name = nil, country_id = nil, genre_id = nil)
+  def index(page, limit, name, country_id, genre_id)
     begin
       conditions = {}
-
       conditions[:name] = /#{name}/i if name
       conditions[:country_id] = country_id if country_id
       conditions[:genre_ids] = genre_id if genre_id
 
-      if page && limit
-        offset = (page.to_i - 1) * limit.to_i
-        movies = Movie.where(conditions).skip(offset).limit(limit.to_i)
-      else
-        movies = Movie.where(conditions)
-      end
+      page = page ? page.to_i : 1
+      limit = limit ? limit.to_i : 5
+
+      offset = (page - 1) * limit
+      movies = Movie.where(conditions).order(created_at: :desc).skip(offset).limit(limit)
       
-      movies
+      total_pages = (Movie.where(conditions).count.to_f / limit).ceil
+
+      { total_pages: total_pages , movies: movies }
     rescue
       raise StandardError
     end

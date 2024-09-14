@@ -8,7 +8,7 @@ class GenreService < ApplicationService
       limit = limit ? limit.to_i : 5
       
       offset = (page - 1) * limit
-      genres = Genre.where(conditions).order(created_at: :desc).skip(offset).limit(limit.to_i)
+      genres = Genre.where(conditions).order(created_at: :desc).skip(offset).limit(limit)
 
       total_pages = (Genre.where(conditions).count.to_f / limit).ceil
 
